@@ -1,39 +1,67 @@
-# UGV Autonomous Navigation — Assignment README
+# Autonomous UGV Navigation & Ground Station
 
-## 1. Project overview
-This assignment presents a system design for an **autonomous Unmanned Ground Vehicle (UGV)**. An operator selects a destination on a map, and the UGV plans a safe route, navigates while avoiding obstacles, confirms arrival, and can perform a task.
+A browser-based **Unmanned Ground Vehicle (UGV) ground-station simulation** and accompanying system-design proposal. The project demonstrates how an operator can select a destination on a LiDAR-style map, monitor a simulated mission, inspect navigation and motor-control telemetry, and test fault-handling scenarios.
 
-## 2. Proposed hardware
-- **2D 360° LiDAR:** obstacle detection, mapping and localization.
-- **Camera:** live visual monitoring and optional target verification.
-- **Wheel encoders + IMU:** odometry and heading feedback.
-- **Motor controller + MCU:** wheel-speed control using PID, encoder feedback and PWM.
-- **Onboard computer:** runs perception, planning and the operator interface.
-- **Touchscreen / remote GUI:** displays the map, camera and mission status.
+<p align="center">
+  <a href="https://nilabjo08.github.io/UGV_Autonomous-Navigation-Project/ugv_ground_station.html"><strong>🚀 Open Live Ground Station Demo</strong></a>
+  &nbsp; · &nbsp;
+  <a href="UGV_Autonomous_Navigation_Professional%20(1).pdf">📄 Read the Technical Design PDF</a>
+</p>
 
-These are proposed design components, not a claim that the HTML demo is connected to physical hardware.
+> **Note:** The live demo is a self-contained browser simulation. It is not connected to a physical UGV, ROS 2 network, LiDAR, camera, or motor controller. Hardware and ROS 2 elements in the design document describe a proposed system architecture. Simulation parameters are illustrative and are not validated hardware performance results.
 
-## 3. Software architecture and workflow
-The design uses **ROS 2** nodes and separates the system into layers:
-1. **Perception:** LiDAR scan processing, camera stream and sensor data.
-2. **Mapping/localization:** SLAM builds the occupancy map; odometry and IMU help estimate robot pose.
-3. **Navigation:** a global planner (A*) finds a route; a local planner (DWA) adjusts motion around nearby obstacles.
-4. **Motor interface:** converts linear/angular velocity commands into left/right wheel commands.
-5. **Mission manager + GUI:** handles destination selection, mission states, status and task execution.
+## Project contents
 
-Typical flow: **Mapping/Idle → Planning → Navigating → Arrived → Action → Idle**. If progress fails, the robot enters recovery and may report failure. The operator can cancel a mission; a hardware emergency stop overrides normal operation.
+| File | Description |
+|---|---|
+| [`ugv_ground_station.html`](ugv_ground_station.html) | Interactive browser-based ground-station simulation |
+| [`UGV_Autonomous_Navigation_Professional (1).pdf`](UGV_Autonomous_Navigation_Professional%20(1).pdf) | Six-page technical design note covering architecture, mapping, navigation, motor control and safety |
+| [`README_UGV_Assignment.md`](README_UGV_Assignment.md) | Short assignment and interview-oriented overview |
 
-## 4. Important control and safety concepts
-- Differential-drive kinematics convert vehicle velocity into left and right wheel speeds.
-- Each wheel uses closed-loop PID speed control with encoder feedback.
-- A command watchdog, LiDAR-based stop/slow zones and a hardware E-stop provide safety layers.
-- Arrival is confirmed using position/heading tolerance and a short settling period.
+## Demo features
 
-## 5. Validation approach
-The design proposes a staged process: **Gazebo simulation → recorded sensor-data (rosbag) replay → low-speed field testing**. The numerical values in the assignment are illustrative design parameters and must be validated against the actual robot.
+- **Map and destination selection:** Click or tap the map to set or change a destination.
+- **Mission scenarios:** Run nominal navigation, obstacle, no-route, LiDAR-dropout and motor-link-loss scenarios.
+- **Navigation visualization:** Inspect the simulated robot pose, route, goal distance, map exploration and recovery events.
+- **Camera panel:** View the simulated camera feed.
+- **Motor-control view:** Inspect wheel-speed response, PID metrics, step tests and optional CSV log loading.
+- **Fault and safety controls:** Inject selected faults, cancel or resume a route, use manual-drive controls, and test the simulated E-stop.
+- **Telemetry:** Review topic rates, data age, subsystem health and the event log; export the log as CSV.
 
-## 6. Interview summary
-“I designed the system concept for a differential-drive UGV. The operator selects a goal on the map. LiDAR and SLAM provide mapping and localization, the global and local planners generate and adjust a safe path, and the motor controller tracks wheel-speed commands using PID and encoder feedback. I also considered fault recovery, watchdog protection and emergency stopping. The assignment is a system-design proposal; the accompanying HTML is a browser-based simulation demo, not a physical ROS 2 implementation.”
+## Proposed system architecture
 
-## 7. Key terms
-**UGV:** Unmanned Ground Vehicle · **ROS 2:** Robot Operating System 2 · **SLAM:** Simultaneous Localization and Mapping · **EKF:** Extended Kalman Filter · **A*:** graph-search path planner · **DWA:** Dynamic Window Approach · **PID:** Proportional–Integral–Derivative control · **PWM:** Pulse-Width Modulation · **E-stop:** emergency stop.
+The accompanying design note describes a layered ROS 2 architecture:
+
+1. **Perception:** 2D LiDAR scan processing and camera data.
+2. **Mapping and localization:** SLAM, occupancy-grid mapping, wheel odometry, IMU and EKF fusion.
+3. **Navigation:** A* global path planning, costmaps and DWA local obstacle avoidance.
+4. **Motor interface:** Differential-drive kinematics and wheel-speed commands.
+5. **Low-level control:** MCU-based encoder feedback, PID speed loops and PWM motor control.
+6. **Mission and operator interface:** Goal selection, mission-state handling, status display and destination actions.
+
+The proposed validation path is **Gazebo simulation → rosbag replay → staged, low-speed field testing**.
+
+## How to run locally
+
+1. Download or clone this repository.
+2. Open `ugv_ground_station.html` in a modern web browser.
+3. Click or tap the map to set a destination, then run one of the demo scenarios.
+
+No build step or package installation is required for the standalone HTML demo. An internet connection may be needed to load the externally hosted fonts.
+
+## GitHub Pages deployment
+
+The live-demo link at the top uses this GitHub Pages address:
+
+`https://nilabjo08.github.io/UGV_Autonomous-Navigation-Project/ugv_ground_station.html`
+
+To publish it, open **Settings → Pages** in this repository, choose **Deploy from a branch**, select **main** and **/(root)**, and save. Wait for GitHub Pages to finish deploying, then open the live-demo link above. If the repository is private, Pages availability depends on the repository and account plan.
+
+## Project scope
+
+This repository contains a system-design assignment, a static HTML/JavaScript simulation and supporting documentation. It does not include a deployed ROS 2 package, physical robot firmware, hardware drivers, or a real sensor connection.
+
+---
+
+**Author:** [nilabjo08](https://github.com/nilabjo08)  
+**Repository:** [UGV_Autonomous-Navigation-Project](https://github.com/nilabjo08/UGV_Autonomous-Navigation-Project)
