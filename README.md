@@ -3,7 +3,7 @@
 A browser-based **Unmanned Ground Vehicle (UGV) ground-station simulation** and accompanying system-design proposal. The project demonstrates how an operator can select a destination on a LiDAR-style map, monitor a simulated mission, inspect navigation and motor-control telemetry, and test fault-handling scenarios.
 
 <p align="center">
-  <a href="https://nilabjo08.github.io/UGV_Autonomous-Navigation-Project/ugv_ground_station.html"><strong>🚀 Open Live Ground Station Demo</strong></a>
+  <a href="https://nilabjo08.github.io/UGV_Autonomous-Navigation-Project/"><strong>🚀 Open Live Ground Station Demo</strong></a>
   &nbsp; · &nbsp;
   <a href="UGV_Autonomous_Navigation_Professional%20(1).pdf">📄 Read the Technical Design PDF</a>
 </p>
@@ -14,9 +14,9 @@ A browser-based **Unmanned Ground Vehicle (UGV) ground-station simulation** and 
 
 | File | Description |
 |---|---|
-| [`ugv_ground_station.html`](ugv_ground_station.html) | Interactive browser-based ground-station simulation |
-| [`UGV_Autonomous_Navigation_Professional (1).pdf`](UGV_Autonomous_Navigation_Professional%20(1).pdf) | Six-page technical design note covering architecture, mapping, navigation, motor control and safety |
-| [`README_UGV_Assignment.md`](README_UGV_Assignment.md) | Short assignment and interview-oriented overview |
+| [`index.html`](index.html) | Interactive browser-based ground-station simulation and GitHub Pages homepage |
+| [`UGV_Autonomous_Navigation_Professional (1).pdf`](UGV_Autonomous_Navigation_Professional%20(1).pdf) | Technical design note covering architecture, mapping, navigation, motor control and safety |
+| `README.md` | Project overview, live demo link and documentation |
 
 ## Demo features
 
@@ -44,18 +44,18 @@ The proposed validation path is **Gazebo simulation → rosbag replay → staged
 ## How to run locally
 
 1. Download or clone this repository.
-2. Open `ugv_ground_station.html` in a modern web browser.
+2. Open `index.html` in a modern web browser.
 3. Click or tap the map to set a destination, then run one of the demo scenarios.
 
 No build step or package installation is required for the standalone HTML demo. An internet connection may be needed to load the externally hosted fonts.
 
 ## GitHub Pages deployment
 
-The live-demo link at the top uses this GitHub Pages address:
+GitHub Pages is configured to deploy from the `main` branch and the repository root (`/(root)`). The simulation file is named **`index.html`**, so the project homepage opens the interactive ground-station demo directly:
 
-`https://nilabjo08.github.io/UGV_Autonomous-Navigation-Project/ugv_ground_station.html`
+**[Open the live UGV Ground Station](https://nilabjo08.github.io/UGV_Autonomous-Navigation-Project/)**
 
-To publish it, open **Settings → Pages** in this repository, choose **Deploy from a branch**, select **main** and **/(root)**, and save. Wait for GitHub Pages to finish deploying, then open the live-demo link above. If the repository is private, Pages availability depends on the repository and account plan.
+If you update the simulation, commit the changes to the `main` branch and allow GitHub Pages to finish deploying. The root URL above remains the live demo address.
 
 ## Project scope
 
